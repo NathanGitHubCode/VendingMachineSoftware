@@ -44,13 +44,13 @@ public class VendingMachineCLI extends Item  {
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
-				if (purchaseChoice.equals(PURCHASE_MENU_FEED_MONEY)) {
+				while(purchaseChoice.equals(PURCHASE_MENU_FEED_MONEY)) {
 					menu.feedMoney();
 					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-
-				} else if (choice.equals(PURCHASE_MENU_SELECT_PRODUCT)) {
+				}
+				if (purchaseChoice.equals(PURCHASE_MENU_SELECT_PRODUCT)) {
 					inventory.displayVendingItems();
-
+					menu.selectProduct();
 				} else if (choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 
 				}

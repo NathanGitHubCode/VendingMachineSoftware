@@ -1,11 +1,14 @@
 package com.techelevator.view;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.SQLOutput;
+import java.util.Map;
 import java.util.Scanner;
 
-public class Menu {
+public class Menu extends Inventory{
 
 	private PrintWriter out;
 	private Scanner in;
@@ -51,12 +54,24 @@ public class Menu {
 		System.out.println("Please feed in money in Dollar Bills");
 		String userInput = in.nextLine();
 		userMoney = Double.parseDouble(userInput);
-		currentMoneyProvided = userMoney;
+		currentMoneyProvided += userMoney;
 
 		String returnTest = "Current Money Provided: " + currentMoneyProvided;
 		System.out.println(returnTest);
 	}
+	public void selectProduct() throws IOException {
+		Menu menu = new Menu();
+		System.out.println("Please enter Product Code: ");
+		String userInput = in.nextLine();
+		for(Map.Entry<String, String> displayItem : menu.displayVendingItems().entrySet()){
+			if(displayItem.equals(userInput)){
+				System.out.println(userInput);
+			}
 
+		}
+
+
+	}
 	private void displayMenuOptions(Object[] options) {
 		out.println();
 		for (int i = 0; i < options.length; i++) {

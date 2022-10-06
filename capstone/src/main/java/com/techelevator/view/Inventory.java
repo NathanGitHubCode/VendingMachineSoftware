@@ -15,12 +15,12 @@ public class Inventory extends Item{
 
 
 
-
     public Map<String, String> displayVendingItems() throws IOException {
         File itemInventory = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
         Path path = Paths.get("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
         long lines = 0;
         String itemDisplay = "";
+
         Map<String, String> stockMap = new TreeMap<>();
         try (Scanner inventoryReader = new Scanner(itemInventory)) {
             while (inventoryReader.hasNextLine()) {
@@ -38,7 +38,6 @@ public class Inventory extends Item{
 
             }for(Map.Entry<String, String> displayItem : stockMap.entrySet()){
                 System.out.println(displayItem.getKey() + " "+ displayItem.getValue());
-                //System.out.println(displayItem.getValue());
             }
         }
         catch (IOException e){
@@ -46,6 +45,7 @@ public class Inventory extends Item{
         }
         return null;
     }
+
 
 }
 
