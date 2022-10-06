@@ -74,7 +74,6 @@ public class Menu extends Inventory{
 				System.out.println("Error");
 		}
 
-
 	}
 	private void displayMenuOptions(Object[] options) {
 		out.println();
