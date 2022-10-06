@@ -64,7 +64,7 @@ public class Menu extends Inventory{
 		System.out.println("Please enter Product Code: ");
 		String userInput = in.nextLine();
 		for(Map.Entry<String, String> displayItem : menu.displayVendingItems().entrySet()){
-			if(displayItem.equals(userInput)){
+			if(displayItem.getKey().equals(userInput)){
 				System.out.println(userInput);
 			}
 

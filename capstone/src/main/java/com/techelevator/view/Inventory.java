@@ -43,7 +43,7 @@ public class Inventory extends Item{
         catch (IOException e){
             e.getMessage();
         }
-        return null;
+        return stockMap;
     }
 
 
