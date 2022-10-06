@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class VendingMachineCLI  {
+public class VendingMachineCLI extends Item  {
 
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
@@ -21,15 +21,14 @@ public class VendingMachineCLI  {
 	}
 
 
-
-
 	public void run() {
 		Item item = new Item();
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				item.displayVendingItems();
+				System.out.println(item.displayVendingItems());
+
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
