@@ -6,6 +6,8 @@ import com.techelevator.view.Menu;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachineCLI extends Item  {
@@ -28,7 +30,9 @@ public class VendingMachineCLI extends Item  {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				System.out.println(item.displayVendingItems());
+				Map<String, String> inventoryMap = new HashMap<>();
+				for(String displayItem : stockMap)
+
 
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {

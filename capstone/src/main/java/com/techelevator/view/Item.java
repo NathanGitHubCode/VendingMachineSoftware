@@ -20,13 +20,14 @@ public class Item {
 
 
     private String itemName;
-    private int itemQuantity;
+    private int itemQuantity = 5;
     private double itemPrice;
+    private String itemSlot;
 
     public Item() {
     }
 
-    public Item(String itemName, int itemQuantity, double itemPrice) {
+    public Item(String itemName, int itemQuantity, double itemPrice, String itemSlot) {
         this.itemName = itemName;
         this.itemQuantity = itemQuantity;
         this.itemPrice = itemPrice;
@@ -41,39 +42,28 @@ public class Item {
         return itemPrice;
     }
 
-    private String itemSlot;
 
 
     public String getItemName() {
         return itemName;
     }
 
+    public int getItemQuantity() {
+        return itemQuantity;
+    }
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 
-    public Map<String, String> displayVendingItems() throws IOException {
-        File itemInventory = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
-        Path path = Paths.get("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
-        long lines = 0;
-        String itemDisplay = "";
-        Map<String, String> stockMap = new HashMap<>();
-        try (Scanner inventoryReader = new Scanner(itemInventory)) {
-            while (inventoryReader.hasNextLine()) {
-                lines = Files.lines(path).count();
-                String line = inventoryReader.nextLine();
-                for (int i = 0; i < lines; i++) {
-                    String[] inventoryArray = line.split("\\|");
-                    itemSlot = inventoryArray[0];
-                    itemName = inventoryArray[1];
-                    itemPrice = Double.parseDouble(inventoryArray[2]);
-                    itemDisplay = itemSlot + " " + itemPrice;
-                    stockMap.put(itemName, itemDisplay);
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
+    }
 
-                }
-                System.out.println(stockMap);
-            }
-        }
-        catch (IOException e){
-            e.getMessage();
-        }
-        return stockMap;
+    public void setItemSlot(String itemSlot) {
+        this.itemSlot = itemSlot;
+    }
+
+    public void setItemPrice(double itemPrice) {
+        this.itemPrice = itemPrice;
     }
 }
