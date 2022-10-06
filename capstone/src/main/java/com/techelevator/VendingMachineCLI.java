@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import com.techelevator.view.Inventory;
 import com.techelevator.view.Item;
 import com.techelevator.view.Menu;
 
@@ -16,6 +17,10 @@ public class VendingMachineCLI extends Item  {
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
 	private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
+	private static final String PURCHASE_MENU_FEED_MONEY = "Feed Money";
+	private static final String PURCHASE_MENU_SELECT_PRODUCT = "Select Product";
+	private static final String PURCHASE_MENU_FINISH_TRANSACTION = "Finish Transaction";
+	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_FEED_MONEY, PURCHASE_MENU_SELECT_PRODUCT, PURCHASE_MENU_FINISH_TRANSACTION};
 
 	private Menu menu;
 
@@ -25,18 +30,33 @@ public class VendingMachineCLI extends Item  {
 
 
 	public void run() throws IOException {
-		Item item = new Item();
+		Inventory inventory = new Inventory();
+
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
+			String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				Map<String, String> inventoryMap = new HashMap<>();
-				for(String displayItem : stockMap)
-
+			inventory.displayVendingItems();
 
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-				// do purchase
+				while (true){
+
+
+					if(purchaseChoice.equals(PURCHASE_MENU_FEED_MONEY)){
+						menu.feedMoney();
+						menu.currentMoneyProvided();
+					}
+					else if(choice.equals(PURCHASE_MENU_SELECT_PRODUCT)){
+
+					}
+					else if(choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)){
+
+					}
+				}
+
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				System.exit(1);
 

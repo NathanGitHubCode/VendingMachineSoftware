@@ -9,10 +9,15 @@ public class Menu {
 
 	private PrintWriter out;
 	private Scanner in;
-
+	private double userMoney = 0;
+	private double currentMoneyProvided = 0;
 	public Menu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
 		this.in = new Scanner(input);
+	}
+
+	public Menu() {
+
 	}
 
 	public Object getChoiceFromOptions(Object[] options) {
@@ -41,6 +46,18 @@ public class Menu {
 		return choice;
 	}
 
+
+	public String feedMoney() {
+		System.out.println("Please feed in money in Dollar Bills");
+		String userInput = in.nextLine();
+		userMoney = Double.parseDouble(userInput);
+		currentMoneyProvided = userMoney;
+		String returnTest = "Current Money Provided: " + currentMoneyProvided;
+		return returnTest;
+	}
+	public double currentMoneyProvided(){
+		return currentMoneyProvided;
+	}
 	private void displayMenuOptions(Object[] options) {
 		out.println();
 		for (int i = 0; i < options.length; i++) {
