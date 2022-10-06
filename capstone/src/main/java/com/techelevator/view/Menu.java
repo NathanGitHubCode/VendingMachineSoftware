@@ -47,17 +47,16 @@ public class Menu {
 	}
 
 
-	public String feedMoney() {
+	public void feedMoney() {
 		System.out.println("Please feed in money in Dollar Bills");
 		String userInput = in.nextLine();
 		userMoney = Double.parseDouble(userInput);
 		currentMoneyProvided = userMoney;
+
 		String returnTest = "Current Money Provided: " + currentMoneyProvided;
-		return returnTest;
+		System.out.println(returnTest);
 	}
-	public double currentMoneyProvided(){
-		return currentMoneyProvided;
-	}
+
 	private void displayMenuOptions(Object[] options) {
 		out.println();
 		for (int i = 0; i < options.length; i++) {

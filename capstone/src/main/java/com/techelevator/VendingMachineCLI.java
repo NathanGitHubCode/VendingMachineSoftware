@@ -34,28 +34,27 @@ public class VendingMachineCLI extends Item  {
 
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
-			String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
 
+			String purchaseChoice = null;
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-			inventory.displayVendingItems();
+				inventory.displayVendingItems();
 
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-				while (true){
+				purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
+				if (purchaseChoice.equals(PURCHASE_MENU_FEED_MONEY)) {
+					menu.feedMoney();
+					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
-					if(purchaseChoice.equals(PURCHASE_MENU_FEED_MONEY)){
-						menu.feedMoney();
-						menu.currentMoneyProvided();
-					}
-					else if(choice.equals(PURCHASE_MENU_SELECT_PRODUCT)){
+				} else if (choice.equals(PURCHASE_MENU_SELECT_PRODUCT)) {
+					inventory.displayVendingItems();
 
-					}
-					else if(choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)){
+				} else if (choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 
-					}
 				}
+
 
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				System.exit(1);
