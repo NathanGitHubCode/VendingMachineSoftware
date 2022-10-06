@@ -5,6 +5,7 @@ import com.techelevator.view.Menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class VendingMachineCLI extends Item  {
@@ -21,7 +22,7 @@ public class VendingMachineCLI extends Item  {
 	}
 
 
-	public void run() {
+	public void run() throws IOException {
 		Item item = new Item();
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
@@ -46,7 +47,7 @@ public class VendingMachineCLI extends Item  {
 
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();
