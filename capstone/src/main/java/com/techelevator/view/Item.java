@@ -5,12 +5,18 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+
+
 public class Item {
+
 
     private File itemInventory = new File("vendingmachine.csv");
     private String itemName;
     private int itemQuantity;
     private double itemPrice;
+
+    public Item() {
+    }
 
     public Item (String itemName, int itemQuantity, double itemPrice){
         this.itemName = itemName;
