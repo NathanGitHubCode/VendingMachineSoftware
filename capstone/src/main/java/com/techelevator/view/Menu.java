@@ -1,5 +1,6 @@
 package com.techelevator.view;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -66,8 +67,11 @@ public class Menu extends Inventory{
 		for(Map.Entry<String, String> displayItem : menu.displayVendingItems().entrySet()){
 			if(displayItem.getKey().equals(userInput)){
 				System.out.println(userInput);
-			}
 
+			}
+			}
+			if(displayVendingItems().containsKey(userInput) == false){
+				System.out.println("Error");
 		}
 
 

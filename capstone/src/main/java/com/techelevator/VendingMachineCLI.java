@@ -51,6 +51,8 @@ public class VendingMachineCLI extends Item  {
 				if (purchaseChoice.equals(PURCHASE_MENU_SELECT_PRODUCT)) {
 					inventory.displayVendingItems();
 					menu.selectProduct();
+					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+
 				} else if (choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 
 				}
