@@ -20,7 +20,7 @@ public class VendingMachineCLI extends Item  {
 	private static final String PURCHASE_MENU_FINISH_TRANSACTION = "Finish Transaction";
 
 	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_FEED_MONEY, PURCHASE_MENU_SELECT_PRODUCT, PURCHASE_MENU_FINISH_TRANSACTION};
-
+	private static final String[] PURCHASE_MENU_OPTIONS_FINAL = {PURCHASE_MENU_FEED_MONEY, PURCHASE_MENU_SELECT_PRODUCT, MAIN_MENU_OPTION_EXIT};
 	private Menu menu;
 
 	public VendingMachineCLI(Menu menu)  {
@@ -54,10 +54,12 @@ public class VendingMachineCLI extends Item  {
 					vendingMachine.selectAndPurchase(userInput);
 					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
-				}  if (choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
+				}  if (purchaseChoice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 					vendingMachine.returnChange();
+					 purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS_FINAL);
+				}else if (purchaseChoice.equals(MAIN_MENU_OPTION_EXIT)) {
+					System.exit(1);
 				}
-
 
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				System.exit(1);
