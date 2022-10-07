@@ -61,13 +61,21 @@ public class Menu extends Inventory{
 	}
 	public void selectProduct() throws IOException {
 		Menu menu = new Menu();
+		menu.outputVendingItems();
 		System.out.println("Please enter Product Code: ");
 		String userInput = in.nextLine();
+
 		for(Map.Entry<String, String> displayItem : menu.displayVendingItems().entrySet()){
+
 			if(displayItem.getKey().equals(userInput)){
 				System.out.println(userInput);
+
+				//System.out.println(displayItem.getValue());
 			}
 
+		}
+		if(displayVendingItems().containsKey(userInput) == false){
+			System.out.println("Code invalid");
 		}
 
 

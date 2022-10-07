@@ -36,8 +36,6 @@ public class Inventory extends Item{
                 }
 
 
-            }for(Map.Entry<String, String> displayItem : stockMap.entrySet()){
-                System.out.println(displayItem.getKey() + " "+ displayItem.getValue());
             }
         }
         catch (IOException e){
@@ -45,7 +43,12 @@ public class Inventory extends Item{
         }
         return stockMap;
     }
-
+    public Map<String, String> outputVendingItems() throws IOException {
+        for(Map.Entry<String, String> displayItem : displayVendingItems().entrySet()){
+            System.out.println(displayItem.getKey() + " "+ displayItem.getValue());
+        }
+        return null;
+    }
 
 }
 
