@@ -9,7 +9,7 @@ import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Menu extends Inventory{
+public class Menu extends VendingMachine{
 
 	private PrintWriter out;
 	private Scanner in;
@@ -62,7 +62,6 @@ public class Menu extends Inventory{
 	}
 	public void selectProduct() throws IOException {
 		Menu menu = new Menu();
-		int itemQuantity = 5;
 		menu.outputVendingItems();
 		System.out.println("Please enter Product Code: ");
 		String userInput = in.nextLine();
@@ -72,7 +71,7 @@ public class Menu extends Inventory{
 			if(displayItem.getKey().equals(userInput)){
 				System.out.println(userInput);
 				System.out.println(menu.selectPurchaseOutput());
-				itemQuantity--;
+
 			}
 
 		}

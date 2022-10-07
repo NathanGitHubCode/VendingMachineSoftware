@@ -1,15 +1,9 @@
 package com.techelevator;
 
-import com.techelevator.view.Inventory;
 import com.techelevator.view.Item;
 import com.techelevator.view.Menu;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 public class VendingMachineCLI extends Item  {
 
@@ -30,7 +24,6 @@ public class VendingMachineCLI extends Item  {
 
 
 	public void run() throws IOException {
-		Inventory inventory = new Inventory();
 
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
