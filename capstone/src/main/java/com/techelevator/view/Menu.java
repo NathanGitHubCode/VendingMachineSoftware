@@ -1,5 +1,6 @@
 package com.techelevator.view;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -61,6 +62,7 @@ public class Menu extends Inventory{
 	}
 	public void selectProduct() throws IOException {
 		Menu menu = new Menu();
+		int itemQuantity = 5;
 		menu.outputVendingItems();
 		System.out.println("Please enter Product Code: ");
 		String userInput = in.nextLine();
@@ -69,17 +71,13 @@ public class Menu extends Inventory{
 
 			if(displayItem.getKey().equals(userInput)){
 				System.out.println(userInput);
-
-				//System.out.println(displayItem.getValue());
+				System.out.println(menu.selectPurchaseOutput());
+				itemQuantity--;
 			}
 
 		}
-		if(displayVendingItems().containsKey(userInput) == false){
-			System.out.println("Code invalid");
-		}
-
-
 	}
+
 	private void displayMenuOptions(Object[] options) {
 		out.println();
 		for (int i = 0; i < options.length; i++) {

@@ -20,8 +20,8 @@ public class Inventory extends Item{
         Path path = Paths.get("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
         long lines = 0;
         String itemDisplay = "";
-
         Map<String, String> stockMap = new TreeMap<>();
+
         try (Scanner inventoryReader = new Scanner(itemInventory)) {
             while (inventoryReader.hasNextLine()) {
                 lines = Files.lines(path).count();
@@ -31,7 +31,8 @@ public class Inventory extends Item{
                     setItemSlot(inventoryArray[0]);
                     setItemName(inventoryArray[1]);
                     setItemPrice(Double.parseDouble(inventoryArray[2]));
-                    itemDisplay = getItemName() + " $" + getItemPrice() + " Quantity in stock: " + getItemQuantity();
+                    setItemType(inventoryArray[3]);
+                    itemDisplay = getItemName() + " $" + getItemPrice() +" " +getItemType() + " Quantity in stock: 5";
                     stockMap.put(getItemSlot(), itemDisplay);
                 }
 
@@ -48,6 +49,27 @@ public class Inventory extends Item{
             System.out.println(displayItem.getKey() + " "+ displayItem.getValue());
         }
         return null;
+    }
+    public String selectPurchaseOutput(){
+
+        String test = getItemType();
+        if(test.equals("Candy")){
+            setItemSound("Munch, Munch, Yum!");
+        }
+        if (test.equals("Chip")){
+            setItemSound("Crunch, Crunch, Yum!");
+        }
+        if(test.equals("Drink")){
+            setItemSound("Glug, Glug, Yum!");
+        }
+        if(test.equals("Gum")){
+            setItemSound("Chew, Chew, Yum!");
+        }
+        else{
+            setItemSound("error");
+        }
+        String combinedString = getItemName() + " " + getItemPrice() + " " + getItemSound();
+        return combinedString;
     }
 
 }
