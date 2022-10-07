@@ -66,14 +66,10 @@ public class VendingMachine extends Item{
     }
 
 
-        public Map<String, Integer> remainingStock(String userInput) throws IOException {
+        public Map<String, Integer> remainingStock ()throws IOException {
             Map<String, Integer> stockMap = new TreeMap<>();
             for(Map.Entry<String, String> displayItem : displayVendingItems().entrySet()){
-                stockMap.put(displayItem.getKey(),5);
-            }
-
-        if(userInput.equals(stockMap)){
-                stockMap.put(userInput, stockMap.get(userInput)-1);
+                stockMap.put(displayItem.getKey(),getInStock());
             }
         return stockMap;
         }

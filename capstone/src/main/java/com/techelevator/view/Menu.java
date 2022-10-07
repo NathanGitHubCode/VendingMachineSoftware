@@ -70,8 +70,9 @@ public class Menu extends VendingMachine{
 
 			if(displayItem.getKey().equals(userInput)){
 				System.out.println(userInput);
-				System.out.println(menu.selectPurchaseOutput());
-				System.out.println(remainingStock(userInput));
+				int test =  remainingStock().put(userInput, getInStock()) ;
+				System.out.println(menu.selectPurchaseOutput() + "Quantity remaining: " + test );
+
 
 			}
 

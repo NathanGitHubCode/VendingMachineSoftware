@@ -32,7 +32,7 @@ public class Item {
     }
 
     public int getInStock() {
-        return inStock;
+        return inStock ;
     }
 
     public void setInStock(int inStock) {
@@ -104,9 +104,7 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public void setItemQuantity(int inStock) {
-        this.inStock = inStock;
-    }
+
 
     public void setItemSlot(String itemSlot) {
         this.itemSlot = itemSlot;
