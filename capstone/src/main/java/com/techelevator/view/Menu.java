@@ -66,7 +66,7 @@ public class Menu extends VendingMachine{
 		System.out.println("Please enter Product Code: ");
 		String userInput = in.nextLine();
 
-		for(Map.Entry<String, String> displayItem : menu.displayVendingItems().entrySet()){
+		for(Map.Entry<String, Item> displayItem : menu.displayVendingItems().entrySet()){
 
 			if(displayItem.getKey().equals(userInput)){
 				System.out.println(userInput);

@@ -33,12 +33,12 @@ public class VendingMachine extends Item{
         currentBalance = 0;
         return returnMessage;
     }
-    public Map<String, Item> displayVendingItems() throws IOException {
+    public Map<String, String> displayVendingItems() throws IOException {
         File itemInventory = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
         Path path = Paths.get("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
         long lines = 0;
         String itemDisplay = "";
-        Map<String, Item> stockMap = new TreeMap<>();
+        Map<String, String> stockMap = new TreeMap<>();
 
         try (Scanner inventoryReader = new Scanner(itemInventory)) {
             while (inventoryReader.hasNextLine()) {
@@ -50,8 +50,9 @@ public class VendingMachine extends Item{
                     setItemName(inventoryArray[1]);
                     setItemPrice(Double.parseDouble(inventoryArray[2]));
                     setItemType(inventoryArray[3]);
+                    Item item = new Item(getItemName(), getItemPrice(), getInStock());
                     itemDisplay = getItemName() + " $" + getItemPrice() +" " +getItemType() + " Quantity in stock: 5";
-                    stockMap.put(getItemSlot(), );
+                    stockMap.put(getItemSlot(),itemDisplay);
                 }
 
 
@@ -60,6 +61,7 @@ public class VendingMachine extends Item{
         catch (IOException e){
             e.getMessage();
         }
+        return stockMap;
 
     }
     public Map<String, String> outputVendingItems() throws IOException {
@@ -90,10 +92,9 @@ public class VendingMachine extends Item{
         return combinedString;
     }
 
-    public void itemStock(){
-        int stock = 5;
-    }
-    public void removeItemStock(){
+    public String itemIntake (Item item) {
+        String display = getItemName() + getItemPrice() +getInStock();
+        return display;
 
     }
 }

@@ -20,11 +20,28 @@ public class Item {
 
 
     private String itemName;
-    private int itemQuantity;
+    private static final int MAX_QUANTITY = 5;
+    private int inStock = MAX_QUANTITY;
     private double itemPrice;
     private String itemSlot;
+
+    public Item(String itemName, double itemPrice, int inStock) {
+        this.itemName = itemName;
+        this.itemPrice = itemPrice;
+        this.inStock = inStock;
+    }
+
+    public int getInStock() {
+        return inStock;
+    }
+
+    public void setInStock(int inStock) {
+        this.inStock = inStock;
+    }
+
     private String itemSound;
     private String itemType;
+
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
@@ -46,9 +63,9 @@ public class Item {
     }
 
 
-    public Item(String itemName, int itemQuantity, double itemPrice, String itemSlot, String itemSound, String itemType) {
+    public Item(String itemName, int itemQuantity, double itemPrice, String itemSlot, String itemSound, String itemType, int inStock) {
         this.itemName = itemName;
-        this.itemQuantity = itemQuantity;
+        this.inStock = inStock;
         this.itemPrice = itemPrice;
         this.itemSound = itemSound;
         this.itemType = itemType;
@@ -81,15 +98,14 @@ public class Item {
         return itemName;
     }
 
-    public int getItemQuantity() {
-        return itemQuantity;
-    }
+
+
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
-    public void setItemQuantity(int itemQuantity) {
-        this.itemQuantity = itemQuantity;
+    public void setItemQuantity(int inStock) {
+        this.inStock = inStock;
     }
 
     public void setItemSlot(String itemSlot) {
