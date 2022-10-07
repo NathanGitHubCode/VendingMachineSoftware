@@ -51,33 +51,16 @@ public class Menu extends VendingMachine{
 	}
 
 
-	public void feedMoney() {
-		System.out.println("Please feed in money in Dollar Bills");
-		String userInput = in.nextLine();
-		userMoney = Double.parseDouble(userInput);
-		currentMoneyProvided += userMoney;
+//	public void feedMoney() {
+//		System.out.println("Please feed in money in Dollar Bills");
+//		String userInput = in.nextLine();
+//		userMoney = Double.parseDouble(userInput);
+//		currentMoneyProvided += userMoney;
+//
+//		String returnTest = "Current Money Provided: " + currentMoneyProvided;
+//		System.out.println(returnTest);
+//	}
 
-		String returnTest = "Current Money Provided: " + currentMoneyProvided;
-		System.out.println(returnTest);
-	}
-	public void selectProduct() throws IOException {
-		Menu menu = new Menu();
-		menu.outputVendingItems();
-		System.out.println("Please enter Product Code: ");
-		String userInput = in.nextLine();
-
-		for(Map.Entry<String, String> displayItem : menu.displayVendingItems().entrySet()){
-
-			if(displayItem.getKey().equals(userInput)){
-				System.out.println(userInput);
-				int test =  remainingStock().put(userInput, getInStock()) ;
-				System.out.println(menu.selectPurchaseOutput() + "Quantity remaining: " + test );
-
-
-			}
-
-		}
-	}
 
 	private void displayMenuOptions(Object[] options) {
 		out.println();

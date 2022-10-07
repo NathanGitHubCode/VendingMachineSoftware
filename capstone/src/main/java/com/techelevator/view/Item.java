@@ -21,26 +21,32 @@ public class Item {
 
     private String itemName;
     private static final int MAX_QUANTITY = 5;
-    private int inStock = MAX_QUANTITY;
+    private int quantityInStock;
     private double itemPrice;
     private String itemSlot;
-
-    public Item(String itemName, double itemPrice, int inStock) {
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
-        this.inStock = inStock;
-    }
-
-    public int getInStock() {
-        return inStock ;
-    }
-
-    public void setInStock(int inStock) {
-        this.inStock = inStock;
-    }
-
     private String itemSound;
     private String itemType;
+
+    public Item() {
+    }
+
+    public Item(String itemName, double itemPrice, String itemType, int quantityInStock) {
+        this.itemName = itemName;
+        this.itemPrice = itemPrice;
+        this.itemType = itemType;
+        this.quantityInStock = quantityInStock;
+
+    }
+
+    public int getQuantityInStock() {
+        return quantityInStock ;
+    }
+
+    public void setQuantityInStock(int inStock) {
+        this.quantityInStock = inStock;
+    }
+
+
 
 
     public void setItemType(String itemType) {
@@ -59,13 +65,12 @@ public class Item {
         return itemSound;
     }
 
-    public Item() {
-    }
+
 
 
     public Item(String itemName, int itemQuantity, double itemPrice, String itemSlot, String itemSound, String itemType, int inStock) {
         this.itemName = itemName;
-        this.inStock = inStock;
+        this.quantityInStock = inStock;
         this.itemPrice = itemPrice;
         this.itemSound = itemSound;
         this.itemType = itemType;
