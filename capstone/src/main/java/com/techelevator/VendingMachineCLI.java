@@ -4,6 +4,7 @@ import com.techelevator.view.Item;
 import com.techelevator.view.Menu;
 import com.techelevator.view.VendingMachine;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class VendingMachineCLI extends Item  {
 	private static final String[] PURCHASE_MENU_OPTIONS_FINAL = {PURCHASE_MENU_FEED_MONEY, PURCHASE_MENU_SELECT_PRODUCT, MAIN_MENU_OPTION_EXIT};
 	private Menu menu;
 
-	public VendingMachineCLI(Menu menu)  {
+	public VendingMachineCLI(Menu menu){
 		this.menu = menu;
 	}
 
@@ -37,7 +38,7 @@ public class VendingMachineCLI extends Item  {
 			String purchaseChoice = null;
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				vendingMachine.outputVendingItems();
-
+				vendingMachine.fileWriter();
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);

@@ -1,10 +1,7 @@
 package com.techelevator.view;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,6 +13,7 @@ public class Menu extends VendingMachine{
 	private double userMoney = 0;
 	private double currentMoneyProvided = 0;
 	public Menu(InputStream input, OutputStream output) {
+
 		this.out = new PrintWriter(output);
 		this.in = new Scanner(input);
 	}

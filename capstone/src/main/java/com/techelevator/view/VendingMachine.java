@@ -17,7 +17,7 @@ public class VendingMachine extends Item {
     private Map<Item, Integer> itemAndQuantity = new HashMap<>();
     private double balance;
 
-    public VendingMachine() throws FileNotFoundException {
+    public VendingMachine() {
     }
 
 
@@ -146,11 +146,12 @@ public class VendingMachine extends Item {
         return display;
 
     }
-
-    public void feedMoney(int userMoney) {
+    public void feedMoney(int userMoney) throws FileNotFoundException {
         balance += userMoney;
         String returnTest = "Current Money Provided: " + balance;
         System.out.println(returnTest);
+        feedMoneyFileWriter(userMoney);
+
     }
 
     public void selectAndPurchase(String slot) {
@@ -174,6 +175,7 @@ public class VendingMachine extends Item {
                 Item itemUpdate = new Item(displayItem.getValue().getItemName(), displayItem.getValue().getItemPrice(), displayItem.getValue().getItemType(), quantity);
                 productsAndCurrentInventory.put(displayItem.getKey(), itemUpdate);
                 System.out.println(displayItem.getValue().getItemName() + " " + displayItem.getValue().getItemPrice() + " Your remaining balance is $" + balance);
+
                 break;
             }
         }
@@ -184,18 +186,25 @@ public class VendingMachine extends Item {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
         return dateTimeFormatter.format(now);
     }
-
-    public void fileWriter() {
-        File log = new File("Log.txt");
+    File log = new File("Log.txt");
+    public void feedMoneyFileWriter(int userMoney) throws FileNotFoundException {
         try (PrintWriter writer = new PrintWriter(log)) {
-           getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss");
+            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss" + "FEED MONEY: " +  userMoney + " " + getBalance()));
+        }
+    }
+
+
+    public File fileWriter() {
+        try (PrintWriter writer = new PrintWriter(log)) {
+
 
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
-
+        return log;
     }
+
 }
 
 
