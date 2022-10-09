@@ -64,7 +64,10 @@ public class Menu extends VendingMachine{
 		out.println();
 		for (int i = 0; i < options.length; i++) {
 			int optionNum = i + 1;
-			out.println(optionNum + ") " + options[i]);
+			if(optionNum <= 3){
+				out.println(optionNum + ") " + options[i]);
+			}
+			out.print("");
 		}
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();

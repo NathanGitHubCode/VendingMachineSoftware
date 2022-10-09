@@ -19,9 +19,10 @@ public class VendingMachineCLI extends Item  {
 	private static final String PURCHASE_MENU_FEED_MONEY = "Feed Money";
 	private static final String PURCHASE_MENU_SELECT_PRODUCT = "Select Product";
 	private static final String PURCHASE_MENU_FINISH_TRANSACTION = "Finish Transaction";
+	private static final String PURCHASE_MENU_EXIT_PURCHASE_MENU = "Exit Purchase Menu";
 
 	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_FEED_MONEY, PURCHASE_MENU_SELECT_PRODUCT, PURCHASE_MENU_FINISH_TRANSACTION};
-	private static final String[] PURCHASE_MENU_OPTIONS_FINAL = {PURCHASE_MENU_FEED_MONEY, PURCHASE_MENU_SELECT_PRODUCT, MAIN_MENU_OPTION_EXIT};
+	private static final String[] PURCHASE_MENU_OPTIONS_FINAL = {PURCHASE_MENU_FEED_MONEY, PURCHASE_MENU_SELECT_PRODUCT, PURCHASE_MENU_EXIT_PURCHASE_MENU};
 	private Menu menu;
 
 	public VendingMachineCLI(Menu menu){
@@ -38,7 +39,7 @@ public class VendingMachineCLI extends Item  {
 			String purchaseChoice = null;
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				vendingMachine.outputVendingItems();
-				vendingMachine.fileWriter();
+
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
@@ -47,24 +48,29 @@ public class VendingMachineCLI extends Item  {
 					System.out.println("Please feed in money in Dollar Bills");
 					String userInput = scanner.nextLine();
 					vendingMachine.feedMoney(Integer.parseInt(userInput));
+					//vendingMachine.feedMoneyFileWriter(Integer.parseInt(userInput));
 					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 				}
 				while(purchaseChoice.equals(PURCHASE_MENU_SELECT_PRODUCT)) {
 					System.out.println("Please enter Product Code: ");
 					String userInput = scanner.nextLine();
 					vendingMachine.selectAndPurchase(userInput);
+					vendingMachine.selectAndPurchaseFileWriter(userInput);
 					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
-				}  if (purchaseChoice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
+				}  while (purchaseChoice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 					vendingMachine.returnChange();
+					vendingMachine.getChangeFileWriter();
 					 purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS_FINAL);
-				}else if (purchaseChoice.equals(MAIN_MENU_OPTION_EXIT)) {
+				} if (purchaseChoice.equals(MAIN_MENU_OPTION_EXIT)) {
 					System.exit(1);
 				}
 
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				System.exit(1);
 
+			} else if (choice.equals(MAIN_MENU_OPTION_HIDDEN_MENU)){
+				System.out.println("This is the hidden menu!");
 			}
 		}
 	}

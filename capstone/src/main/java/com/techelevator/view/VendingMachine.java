@@ -1,9 +1,6 @@
 package com.techelevator.view;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -120,33 +117,14 @@ public class VendingMachine extends Item {
         }
     }
 
-    public String selectPurchaseOutput() {
 
-        String test = getItemType();
-        if (test.equals("Candy")) {
-            setItemSound("Munch, Munch, Yum!");
-        }
-        if (test.equals("Chip")) {
-            setItemSound("Crunch, Crunch, Yum!");
-        }
-        if (test.equals("Drink")) {
-            setItemSound("Glug, Glug, Yum!");
-        }
-        if (test.equals("Gum")) {
-            setItemSound("Chew, Chew, Yum!");
-        } else {
-            setItemSound("error");
-        }
-        String combinedString = getItemName() + " " + getItemPrice() + " " + getItemSound();
-        return combinedString;
-    }
 
     public String itemIntake(Item item) {
         String display = getItemName() + getItemPrice() + getQuantityInStock();
         return display;
 
     }
-    public void feedMoney(int userMoney) throws FileNotFoundException {
+    public void feedMoney(int userMoney)  {
         balance += userMoney;
         String returnTest = "Current Money Provided: " + balance;
         System.out.println(returnTest);
@@ -175,7 +153,21 @@ public class VendingMachine extends Item {
                 Item itemUpdate = new Item(displayItem.getValue().getItemName(), displayItem.getValue().getItemPrice(), displayItem.getValue().getItemType(), quantity);
                 productsAndCurrentInventory.put(displayItem.getKey(), itemUpdate);
                 System.out.println(displayItem.getValue().getItemName() + " " + displayItem.getValue().getItemPrice() + " Your remaining balance is $" + balance);
-
+                if (displayItem.getValue().getItemType().equals("Candy")) {
+                    setItemSound("Munch, Munch, Yum!");
+                }
+                else if (displayItem.getValue().getItemType().equals("Chip")) {
+                    setItemSound("Crunch, Crunch, Yum!");
+                }
+                else  if (displayItem.getValue().getItemType().equals("Drink")) {
+                    setItemSound("Glug, Glug, Yum!");
+                }
+                else if (displayItem.getValue().getItemType().equals("Gum")) {
+                    setItemSound("Chew, Chew, Yum!");
+                } else {
+                    setItemSound("error");
+                }
+                System.out.println(getItemSound());
                 break;
             }
         }
@@ -186,26 +178,42 @@ public class VendingMachine extends Item {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
         return dateTimeFormatter.format(now);
     }
-    File log = new File("Log.txt");
-    public void feedMoneyFileWriter(int userMoney) throws FileNotFoundException {
-        try (PrintWriter writer = new PrintWriter(log)) {
-            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss" + "FEED MONEY: " +  userMoney + " " + getBalance()));
-        }
-    }
 
+    File log = new File("Log.log");
 
-    public File fileWriter() {
-        try (PrintWriter writer = new PrintWriter(log)) {
-
-
+    public void feedMoneyFileWriter(int userMoney) {
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss" ) + " FEED MONEY: " +  userMoney + " " + getBalance());
 
         } catch (FileNotFoundException e) {
-            e.getMessage();
+            e.printStackTrace();
         }
-        return log;
+    }
+    public void selectAndPurchaseFileWriter(String slot) {
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+            for (Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()) {
+                if (displayItem.getKey().equals(slot)) {
+                    writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " " + displayItem.getValue().getItemName() + " " + slot + " $" + displayItem.getValue().getItemPrice() + " $" + getBalance());
+                }
+            }
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+        }
+    }
+    public void getChangeFileWriter (){
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " Give change: $" + getBalance() + " $0.00");
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+    }
+        }
+
+
+
+
     }
 
-}
+
 
 
 
