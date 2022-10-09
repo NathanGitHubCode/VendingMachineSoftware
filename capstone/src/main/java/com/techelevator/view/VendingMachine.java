@@ -4,16 +4,18 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class VendingMachine extends Item {
-    private Map<String, Item> listOfProducts;
-    private Map<Item, Integer> itemAndQuantity = new HashMap<>();
     private double balance;
-
+    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+    File log = new File("Log.log");
+    Map<String, Item> productsAndCurrentInventory = loadingVendingItems();
+    private int amountOrdered;
     public VendingMachine() {
     }
 
@@ -47,44 +49,36 @@ public class VendingMachine extends Item {
         }
 
 
-        System.out.println("Your change is  Number of Quarters: " + numOfQuarters + " Number of dimes: " + numOfDimes + " Number of nickels: " + numOfNickels + " Will dispense");
+        System.out.println(numOfQuarters + " Quarters | " + numOfDimes + " Dimes | " + numOfNickels + " Nickels | Returned - Please check change compartment");
     }
 
-    //        int numberOfQuarters = (int)Math.floor(balance/ 0.25);
-//        int numberOfDimes = (int)Math.floor((balance - (0.25 * numberOfQuarters) / 0.10));
-//        int numberOfNickels = (int)Math.round(((balance - ((0.25 * numberOfQuarters) + (0.10 * numberOfDimes))) / 0.05));
-//
-//        String returnMessage = "Your change is " + NumberFormat.getCurrencyInstance().format(balance) + " Number of Quarters: " + numberOfQuarters + " Number of dimes: " +numberOfDimes + " Number of nickels: " + numberOfNickels + "Will dispense";
-//        balance = 0;
-//        System.out.println(returnMessage);
-//        return returnMessage;
-//    }
+
     public Map<String, Item> loadingVendingItems() {
         File itemInventory = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
-        Path path = Paths.get("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
-        //long lines = 0;
-        String itemDisplay = "";
         Map<String, Item> inventoryMap = new TreeMap<>();
-
         try (Scanner inventoryReader = new Scanner(itemInventory)) {
             while (inventoryReader.hasNextLine()) {
-                // lines = Files.lines(path).count();
                 String line = inventoryReader.nextLine();
                 String[] inventoryArray = line.split("\\|");
                 Item item = new Item(inventoryArray[1], Double.parseDouble(inventoryArray[2]), inventoryArray[3], 5);
                 inventoryMap.put(inventoryArray[0], item);
 
 
-//                for (int i = 0; i < lines; i++) {
-//                    String[] inventoryArray = line.split("\\|");
-//                    setItemSlot(inventoryArray[0]);
-//                    setItemName(inventoryArray[1]);
-//                    setItemPrice(Double.parseDouble(inventoryArray[2]));
-//                    setItemType(inventoryArray[3]);
-//
-//                    itemDisplay = getItemName() + " $" + getItemPrice() +" " +getItemType() + " Quantity in stock: 5";
-//                    inventoryMap.put(getItemSlot(),itemDisplay);
-//                }
+            }
+        } catch (IOException e) {
+            e.getMessage();
+        }
+        return inventoryMap;
+
+    }
+    public Map<String, Integer> loadSalesReport() {
+        File itemInventory = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
+        Map<String, Integer> inventoryMap = new TreeMap<>();
+        try (Scanner inventoryReader = new Scanner(itemInventory)) {
+            while (inventoryReader.hasNextLine()) {
+                String line = inventoryReader.nextLine();
+                String[] inventoryArray = line.split("\\|");
+                inventoryMap.put(inventoryArray[1], amountOrdered);
 
 
             }
@@ -95,77 +89,54 @@ public class VendingMachine extends Item {
 
     }
 
-    Map<String, Item> productsAndCurrentInventory = loadingVendingItems();
-
-
-//        public Map<String, Integer> remainingStock (){
-//            Map<String, Integer> stockMap = new TreeMap<>();
-//            for(Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()){
-//                stockMap.put(displayItem.getKey(),getInStock());
-//            }
-//        return stockMap;
-//        }
-//
 
     public void outputVendingItems() {
         for (Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()) {
             System.out.print(displayItem.getKey() + " ");
             System.out.print(displayItem.getValue().getItemName() + " ");
-            System.out.print(displayItem.getValue().getItemPrice() + " ");
+            System.out.print(currencyFormatter.format(displayItem.getValue().getItemPrice()) + " ");
             System.out.print(displayItem.getValue().getItemType() + " ");
-            System.out.println(displayItem.getValue().getQuantityInStock() + " ");
+            System.out.println("Quantity: " + displayItem.getValue().getQuantityInStock() + " ");
         }
     }
 
 
-
-    public String itemIntake(Item item) {
-        String display = getItemName() + getItemPrice() + getQuantityInStock();
-        return display;
-
-    }
-    public void feedMoney(int userMoney)  {
+    public void feedMoney(double userMoney) {
         balance += userMoney;
-        String returnTest = "Current Money Provided: " + balance;
+        String returnTest = "Current Money Provided: " + currencyFormatter.format(balance);
         System.out.println(returnTest);
         feedMoneyFileWriter(userMoney);
 
     }
 
     public void selectAndPurchase(String slot) {
-        //outputVendingItems();
         int quantity;
         for (Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()) {
-            if (getBalance() < displayItem.getValue().getItemPrice()) {
+            if (displayItem.getKey().equals(slot) && getBalance() < displayItem.getValue().getItemPrice()) {
                 System.out.println("**************************************************");
                 System.out.println("Your balance is too low, please insert more money");
                 System.out.println("**************************************************");
-
                 break;
-            } else if (displayItem.getValue().getQuantityInStock() <= 0) {
+            } else if (displayItem.getKey().equals(slot) && displayItem.getValue().getQuantityInStock() <= 0) {
                 System.out.println("**************************************************");
                 System.out.println("This item is out of stock");
                 System.out.println("**************************************************");
+                break;
 
             } else if (displayItem.getKey().equals(slot) && getBalance() >= displayItem.getValue().getItemPrice() && displayItem.getValue().getQuantityInStock() > 0) {
                 balance -= displayItem.getValue().getItemPrice();
                 quantity = displayItem.getValue().getQuantityInStock() - 1;
                 Item itemUpdate = new Item(displayItem.getValue().getItemName(), displayItem.getValue().getItemPrice(), displayItem.getValue().getItemType(), quantity);
                 productsAndCurrentInventory.put(displayItem.getKey(), itemUpdate);
-                System.out.println(displayItem.getValue().getItemName() + " " + displayItem.getValue().getItemPrice() + " Your remaining balance is $" + balance);
+                System.out.println(displayItem.getValue().getItemName() + " " + currencyFormatter.format(displayItem.getValue().getItemPrice()) + " Your remaining balance is " + currencyFormatter.format(balance));
                 if (displayItem.getValue().getItemType().equals("Candy")) {
                     setItemSound("Munch, Munch, Yum!");
-                }
-                else if (displayItem.getValue().getItemType().equals("Chip")) {
+                } else if (displayItem.getValue().getItemType().equals("Chip")) {
                     setItemSound("Crunch, Crunch, Yum!");
-                }
-                else  if (displayItem.getValue().getItemType().equals("Drink")) {
+                } else if (displayItem.getValue().getItemType().equals("Drink")) {
                     setItemSound("Glug, Glug, Yum!");
-                }
-                else if (displayItem.getValue().getItemType().equals("Gum")) {
+                } else if (displayItem.getValue().getItemType().equals("Gum")) {
                     setItemSound("Chew, Chew, Yum!");
-                } else {
-                    setItemSound("error");
                 }
                 System.out.println(getItemSound());
                 break;
@@ -173,45 +144,42 @@ public class VendingMachine extends Item {
         }
         outputVendingItems();
     }
+
     public static String getCurrentTimeAsString(String format) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
         return dateTimeFormatter.format(now);
     }
 
-    File log = new File("Log.log");
 
-    public void feedMoneyFileWriter(int userMoney) {
+    public void feedMoneyFileWriter(double userMoney) {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
-            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss" ) + " FEED MONEY: " +  userMoney + " " + getBalance());
-
+            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " FEED MONEY: " + currencyFormatter.format(userMoney) + " " + currencyFormatter.format(getBalance()));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
+
     public void selectAndPurchaseFileWriter(String slot) {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
             for (Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()) {
                 if (displayItem.getKey().equals(slot)) {
-                    writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " " + displayItem.getValue().getItemName() + " " + slot + " $" + displayItem.getValue().getItemPrice() + " $" + getBalance());
+                    writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " " + displayItem.getValue().getItemName() + " " + slot + " " + currencyFormatter.format(displayItem.getValue().getItemPrice()) + " " + currencyFormatter.format(getBalance()));
                 }
             }
-            }catch(FileNotFoundException e){
-                e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.getMessage();
         }
     }
-    public void getChangeFileWriter (){
+
+    public void getChangeFileWriter() {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
-            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " Give change: $" + getBalance() + " $0.00");
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-    }
+            writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " Give change: " + currencyFormatter.format(getBalance()) + " $0.00");
+        } catch (FileNotFoundException e) {
+            e.getMessage();
         }
-
-
-
-
     }
+}
 
 
 

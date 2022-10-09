@@ -30,46 +30,43 @@ public class VendingMachineCLI extends Item  {
 	}
 
 	VendingMachine vendingMachine = new VendingMachine();
-	public void run() throws IOException {
+	public void run(){
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
-
-
 			String purchaseChoice = null;
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				vendingMachine.outputVendingItems();
 
-
-			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
+			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)){
 				purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
 				while(purchaseChoice.equals(PURCHASE_MENU_FEED_MONEY)) {
 					System.out.println("Please feed in money in Dollar Bills");
 					String userInput = scanner.nextLine();
 					vendingMachine.feedMoney(Integer.parseInt(userInput));
-					//vendingMachine.feedMoneyFileWriter(Integer.parseInt(userInput));
 					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 				}
-				while(purchaseChoice.equals(PURCHASE_MENU_SELECT_PRODUCT)) {
+				while(purchaseChoice.equals(PURCHASE_MENU_SELECT_PRODUCT)){
 					System.out.println("Please enter Product Code: ");
 					String userInput = scanner.nextLine();
 					vendingMachine.selectAndPurchase(userInput);
 					vendingMachine.selectAndPurchaseFileWriter(userInput);
 					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-
-				}  while (purchaseChoice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
+				}
+				while (purchaseChoice.equals(PURCHASE_MENU_FINISH_TRANSACTION)){
 					vendingMachine.returnChange();
 					vendingMachine.getChangeFileWriter();
 					 purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS_FINAL);
-				} if (purchaseChoice.equals(MAIN_MENU_OPTION_EXIT)) {
+				}
+				if (purchaseChoice.equals(MAIN_MENU_OPTION_EXIT)){
 					System.exit(1);
 				}
-
-			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
+			}
+			else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				System.exit(1);
-
-			} else if (choice.equals(MAIN_MENU_OPTION_HIDDEN_MENU)){
+			}
+			else if (choice.equals(MAIN_MENU_OPTION_HIDDEN_MENU)){
 				System.out.println("This is the hidden menu!");
 			}
 		}
@@ -82,7 +79,7 @@ public class VendingMachineCLI extends Item  {
 
 
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();

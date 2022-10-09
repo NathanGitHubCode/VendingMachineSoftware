@@ -10,16 +10,10 @@ public class Menu extends VendingMachine{
 
 	private PrintWriter out;
 	private Scanner in;
-	private double userMoney = 0;
-	private double currentMoneyProvided = 0;
-	public Menu(InputStream input, OutputStream output) {
 
+	public Menu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
 		this.in = new Scanner(input);
-	}
-
-	public Menu() {
-
 	}
 
 	public Object getChoiceFromOptions(Object[] options) {
@@ -47,18 +41,6 @@ public class Menu extends VendingMachine{
 		}
 		return choice;
 	}
-
-
-//	public void feedMoney() {
-//		System.out.println("Please feed in money in Dollar Bills");
-//		String userInput = in.nextLine();
-//		userMoney = Double.parseDouble(userInput);
-//		currentMoneyProvided += userMoney;
-//
-//		String returnTest = "Current Money Provided: " + currentMoneyProvided;
-//		System.out.println(returnTest);
-//	}
-
 
 	private void displayMenuOptions(Object[] options) {
 		out.println();
