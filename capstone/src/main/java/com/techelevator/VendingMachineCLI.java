@@ -52,6 +52,7 @@ public class VendingMachineCLI extends Item  {
 					String userInput = scanner.nextLine();
 					vendingMachine.selectAndPurchase(userInput);
 					vendingMachine.selectAndPurchaseFileWriter(userInput);
+					vendingMachine.salesReportFileWriter();
 					purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 				}
 				while (purchaseChoice.equals(PURCHASE_MENU_FINISH_TRANSACTION)){

@@ -12,13 +12,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class VendingMachine extends Item {
     private double balance;
-    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
-    File log = new File("Log.log");
-    Map<String, Item> productsAndCurrentInventory = loadingVendingItems();
     private int amountOrdered;
+    private double totalSales;
+    private int quantity;
+
+    File log = new File("Log.log");
+    File salesReport = new File("salesReport1.log");
+    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+    Map<String, Item> productsAndCurrentInventory = loadingVendingItems();
+
     public VendingMachine() {
     }
-
 
     public double getBalance() {
         return balance;
@@ -60,7 +64,7 @@ public class VendingMachine extends Item {
             while (inventoryReader.hasNextLine()) {
                 String line = inventoryReader.nextLine();
                 String[] inventoryArray = line.split("\\|");
-                Item item = new Item(inventoryArray[1], Double.parseDouble(inventoryArray[2]), inventoryArray[3], 5);
+                Item item = new Item(inventoryArray[1], Double.parseDouble(inventoryArray[2]), inventoryArray[3], 5, 0);
                 inventoryMap.put(inventoryArray[0], item);
 
 
@@ -71,23 +75,23 @@ public class VendingMachine extends Item {
         return inventoryMap;
 
     }
-    public Map<String, Integer> loadSalesReport() {
-        File itemInventory = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
-        Map<String, Integer> inventoryMap = new TreeMap<>();
-        try (Scanner inventoryReader = new Scanner(itemInventory)) {
-            while (inventoryReader.hasNextLine()) {
-                String line = inventoryReader.nextLine();
-                String[] inventoryArray = line.split("\\|");
-                inventoryMap.put(inventoryArray[1], amountOrdered);
-
-
-            }
-        } catch (IOException e) {
-            e.getMessage();
-        }
-        return inventoryMap;
-
-    }
+//    public Map<String, Integer> loadSalesReport() {
+//        File itemInventory = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
+//        Map<String, Integer> inventoryMap = new TreeMap<>();
+//        try (Scanner inventoryReader = new Scanner(itemInventory)) {
+//            while (inventoryReader.hasNextLine()) {
+//                String line = inventoryReader.nextLine();
+//                String[] inventoryArray = line.split("\\|");
+//                inventoryMap.put(inventoryArray[1], amountOrdered);
+//
+//
+//            }
+//        } catch (IOException e) {
+//            e.getMessage();
+//        }
+//        return inventoryMap;
+//
+//    }
 
 
     public void outputVendingItems() {
@@ -110,7 +114,6 @@ public class VendingMachine extends Item {
     }
 
     public void selectAndPurchase(String slot) {
-        int quantity;
         for (Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()) {
             if (displayItem.getKey().equals(slot) && getBalance() < displayItem.getValue().getItemPrice()) {
                 System.out.println("**************************************************");
@@ -126,7 +129,8 @@ public class VendingMachine extends Item {
             } else if (displayItem.getKey().equals(slot) && getBalance() >= displayItem.getValue().getItemPrice() && displayItem.getValue().getQuantityInStock() > 0) {
                 balance -= displayItem.getValue().getItemPrice();
                 quantity = displayItem.getValue().getQuantityInStock() - 1;
-                Item itemUpdate = new Item(displayItem.getValue().getItemName(), displayItem.getValue().getItemPrice(), displayItem.getValue().getItemType(), quantity);
+                amountOrdered = displayItem.getValue().getAmountOrdered() + 1;
+                Item itemUpdate = new Item(displayItem.getValue().getItemName(), displayItem.getValue().getItemPrice(), displayItem.getValue().getItemType(), quantity, amountOrdered);
                 productsAndCurrentInventory.put(displayItem.getKey(), itemUpdate);
                 System.out.println(displayItem.getValue().getItemName() + " " + currencyFormatter.format(displayItem.getValue().getItemPrice()) + " Your remaining balance is " + currencyFormatter.format(balance));
                 if (displayItem.getValue().getItemType().equals("Candy")) {
@@ -175,6 +179,20 @@ public class VendingMachine extends Item {
     public void getChangeFileWriter() {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
             writer.println(getCurrentTimeAsString("MM/dd/yyyy HH:mm:ss") + " Give change: " + currencyFormatter.format(getBalance()) + " $0.00");
+        } catch (FileNotFoundException e) {
+            e.getMessage();
+        }
+    }
+
+    public void salesReportFileWriter() {
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(salesReport, true))) {
+            for (Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()) {
+               writer.println(displayItem.getValue().getItemName() + "|" + displayItem.getValue().getAmountOrdered());
+               if(displayItem.getValue().getAmountOrdered() > 0){
+                   currencyFormatter.format(totalSales += displayItem.getValue().getItemPrice());
+               }
+            }
+            writer.println("Total sales :" +  currencyFormatter.format(totalSales));
         } catch (FileNotFoundException e) {
             e.getMessage();
         }

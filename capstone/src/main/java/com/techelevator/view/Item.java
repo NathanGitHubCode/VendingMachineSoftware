@@ -23,6 +23,7 @@ public class Item {
     private double itemPrice;
     private String itemSound;
     private String itemType;
+    private int amountOrdered;
 
     public Item() {
     }
@@ -32,6 +33,14 @@ public class Item {
         this.itemPrice = itemPrice;
         this.itemType = itemType;
         this.quantityInStock = quantityInStock;
+
+    }
+    public Item(String itemName, double itemPrice, String itemType, int quantityInStock, int amountOrdered) {
+        this.itemName = itemName;
+        this.itemPrice = itemPrice;
+        this.itemType = itemType;
+        this.quantityInStock = quantityInStock;
+        this.amountOrdered = amountOrdered;
 
     }
 
@@ -57,5 +66,13 @@ public class Item {
 
     public String getItemName() {
         return itemName;
+    }
+
+    public int getAmountOrdered() {
+        return amountOrdered;
+    }
+
+    public void setAmountOrdered(int amountOrdered) {
+        this.amountOrdered = amountOrdered;
     }
 }
