@@ -17,7 +17,7 @@ public class VendingMachine extends Item {
     private int quantity;
 
     File log = new File("Log.log");
-    File salesReport = new File("salesReport1.log");
+
     NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
     Map<String, Item> productsAndCurrentInventory = loadingVendingItems();
 
@@ -185,14 +185,16 @@ public class VendingMachine extends Item {
     }
 
     public void salesReportFileWriter() {
-        try (PrintWriter writer = new PrintWriter(new FileOutputStream(salesReport, true))) {
+        String reportTitle = (getCurrentTimeAsString("MM-dd-yyyy-HH-mm-ss") + ".log");
+        File salesReport = new File(reportTitle);
+        try (PrintWriter writer = new PrintWriter((salesReport))) {
             for (Map.Entry<String, Item> displayItem : productsAndCurrentInventory.entrySet()) {
                writer.println(displayItem.getValue().getItemName() + "|" + displayItem.getValue().getAmountOrdered());
                if(displayItem.getValue().getAmountOrdered() > 0){
                    currencyFormatter.format(totalSales += displayItem.getValue().getItemPrice());
                }
             }
-            writer.println("Total sales :" +  currencyFormatter.format(totalSales));
+            writer.println("Total sales:" +  currencyFormatter.format(totalSales));
         } catch (FileNotFoundException e) {
             e.getMessage();
         }

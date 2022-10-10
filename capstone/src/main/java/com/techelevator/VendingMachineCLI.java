@@ -68,7 +68,8 @@ public class VendingMachineCLI extends Item  {
 				System.exit(1);
 			}
 			else if (choice.equals(MAIN_MENU_OPTION_HIDDEN_MENU)){
-				System.out.println("This is the hidden menu!");
+				vendingMachine.salesReportFileWriter();
+				System.out.println("Sales report created");
 			}
 		}
 	}
