@@ -1,10 +1,10 @@
-## Module 1 Capstone - Vending Machine Software
+## Vending Machine Software
 
-You're developing an application for the newest vending machine distributor,
+We've developed an application for the newest vending machine distributor,
 Umbrella Corp. They've released a new vending machine, Vendo-Matic 800, that's integrated
 with everyone's bank accounts, allowing customers to purchase products from their computers for their convenience.
 
-### Application requirements
+### Application use cases
 
 1. The vending machine dispenses beverages, candy, chips, and gum.
    - Each vending machine item has a Name and a Price.
@@ -76,12 +76,11 @@ process menu:
         ```
 9. Create as many of your classes as possible to be "testable" classes. Limit console
 input and output to as few classes as possible.
-10. Optional - Sales Report
+10. Sales Report
     - Provide a "Hidden" menu option on the main menu ("4") that writes to a sales
     report that shows the total sales since the machine started. The name of the
     file must include the date and time so each sales report is uniquely named.
     - An example of the output format appears at the end of this file.
-11. Provide unit tests demonstrating that your code works correctly.
 ___
 ### Vending machine data file
 The input file that stocks the vending machine products is a pipe `|` delimited file. Each line is a separate product in the file and follows this format:
@@ -108,25 +107,4 @@ C1|Cola|1.25|Drink
 ### Sales report
 The output sales report file is also pipe-delimited for consistency. Each line is a separate product with the number of sales for the applicable product. At the end of the report is a blank line followed by the **TOTAL SALES** dollar amount indicating the gross sales from the vending machine.
 
-For example:
 
->```
->Potato Crisps|0
->Stackers|1
->Grain Waves|0
->Cloud Popcorn|0
->Moonpie|3
->Cowtales|0
->Wonka Bar|0
->Crunchie|0
->Cola|2
->Dr. Salt|0
->Mountain Melter|0
->Heavy|0
->U-Chews|0
->Little League Chew|1
->Chiclets|1
->Triplemint|0
->
->**TOTAL SALES** $11.05
->```
